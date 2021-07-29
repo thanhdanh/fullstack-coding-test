@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { firebaseClient } from "./firebaseClient";
-import useFirebaseAuth from "./useFirbaseAuth";
+import useFirebaseAuth from "./useFirebaseAuth";
 
 type AuthUserCredentials = firebaseClient.auth.UserCredential;
 

@@ -3,7 +3,7 @@ import { Flex, Heading } from "@chakra-ui/layout";
 import Head from "next/head";
 import { useRouter } from 'next/router';
 import { Button, FormControl, Input, InputGroup, InputRightElement, Link, toast, useColorModeValue, useToast } from "@chakra-ui/react";
-import { useAuth } from "auth/auth";
+import { useAuth } from "utils/auth";
 import FormErrorMessage from "components/ErrorMessage";
 import { useFormik } from "formik";
 

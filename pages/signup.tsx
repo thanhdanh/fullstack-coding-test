@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Button, Flex, FormControl, FormLabel, Heading, Input, useColorModeValue, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import FormErrorMessage from "components/ErrorMessage";
-import { useAuth } from "auth/auth";
+import { useAuth } from "utils/auth";
 import { useRouter } from "next/router";
 
 interface ISignupFormValues {

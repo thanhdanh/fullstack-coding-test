@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import DynamicText, { IDynamicTextComp } from "components/DynamicText";
 import { Flex, Input, Spinner } from "@chakra-ui/react";
-import { useAuth } from "auth/auth";
+import { useAuth } from "utils/auth";
 
 const Home = () => {
   const { user, loading } = useAuth();
