@@ -4,6 +4,7 @@ import { Button, Flex, FormControl, FormLabel, Heading, Input, useColorModeValue
 import { useFormik } from "formik";
 import FormErrorMessage from "components/ErrorMessage";
 import { useAuth } from "auth/auth";
+import { useRouter } from "next/router";
 
 interface ISignupFormValues {
   email: string;
@@ -39,6 +40,7 @@ const Signup = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const { signUp } = useAuth();
   const toast = useToast();
+  const router = useRouter();
   const [signUperror, setSignUpError] = useState(null);
 
   const formik = useFormik<ISignupFormValues>({
@@ -60,7 +62,7 @@ const Signup = () => {
           duration: 9000,
           isClosable: true,
         });
-        window.location.href = '/';
+        router.push('/');
       } catch (error) {
         setSignUpError(error.message);
       }

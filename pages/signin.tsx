@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Flex, Heading } from "@chakra-ui/layout";
 import Head from "next/head";
+import { useRouter } from 'next/router';
 import { Button, FormControl, Input, InputGroup, InputRightElement, Link, toast, useColorModeValue, useToast } from "@chakra-ui/react";
 import { useAuth } from "auth/auth";
 import FormErrorMessage from "components/ErrorMessage";
@@ -34,6 +35,7 @@ const Login = () => {
   const [signInerror, setSignInError] = useState(null);
   const { signIn } = useAuth();
   const toast = useToast();
+  const router = useRouter();
 
   const handleClick = () => setShow(!show);
   const formik = useFormik<ISignInFormValues>({
@@ -56,7 +58,7 @@ const Login = () => {
           isClosable: true,
         });
         setTimeout(() => {
-          window.location.href = '/';
+          router.push('/');
         }, 2000);
       } catch (error) {
         setSignInError(error.message);
