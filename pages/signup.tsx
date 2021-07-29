@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
-import { Button, Flex, FormControl, FormLabel, Heading, Input, useColorModeValue } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Heading, Input, useColorModeValue, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import FormErrorMessage from "components/ErrorMessage";
+import { useAuth } from "auth/auth";
 
 interface IFormValues {
   email: string;
@@ -36,6 +37,10 @@ const validate = (values: IFormValues) => {
 
 const Signup = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  const { signUp } = useAuth();
+  const toast = useToast();
+  const [signUperror, setSignUpError] = useState(null);
+
   const formik = useFormik<IFormValues>({
     initialValues: {
       email: "",
@@ -43,8 +48,22 @@ const Signup = () => {
       confirmPassword: "",
     },
     validate,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      try {
+        setSignUpError(null);
+        await signUp(values.email, values.password);
+        toast({
+          position: "top",
+          title: 'Signup new account',
+          description: "We've created your account for you.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        window.location.href = '/';
+      } catch (error) {
+        setSignUpError(error.message);
+      }
     },
   });
 
@@ -56,6 +75,7 @@ const Signup = () => {
       </Head>
       <Flex direction="column" flex="1" background={formBackground} p={8} rounded={8} maxW={450}>
         <Heading mb={8}>Create new account</Heading>
+        {signUperror && <FormErrorMessage message={signUperror} />}
         <form onSubmit={formik.handleSubmit}>
           <FormControl isRequired mb={3}>
             <FormLabel htmlFor="email">Email</FormLabel>
@@ -66,7 +86,7 @@ const Signup = () => {
               id="email"
               {...formik.getFieldProps("email")}
             />
-            {formik.touched.email && formik.errors.email ? <FormErrorMessage message={formik.errors.email} /> : null}
+            {formik.touched.email && formik.errors.email && <FormErrorMessage message={formik.errors.email} />}
           </FormControl>
           <FormControl isRequired mb={3}>
             <FormLabel htmlFor="password">Password</FormLabel>
