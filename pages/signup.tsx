@@ -5,15 +5,15 @@ import { useFormik } from "formik";
 import FormErrorMessage from "components/ErrorMessage";
 import { useAuth } from "auth/auth";
 
-interface IFormValues {
+interface ISignupFormValues {
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-type FormError = Partial<IFormValues>;
+type FormError = Partial<ISignupFormValues>;
 
-const validate = (values: IFormValues) => {
+const validate = (values: ISignupFormValues) => {
   const errors: FormError = {};
   if (!values.email) {
     errors.email = 'Required';
@@ -41,7 +41,7 @@ const Signup = () => {
   const toast = useToast();
   const [signUperror, setSignUpError] = useState(null);
 
-  const formik = useFormik<IFormValues>({
+  const formik = useFormik<ISignupFormValues>({
     initialValues: {
       email: "",
       password: "",
