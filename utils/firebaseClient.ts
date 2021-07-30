@@ -11,7 +11,6 @@ const firebaseCredentials = {
 
 if (!firebaseClient .apps.length) {
     firebaseClient.initializeApp(firebaseCredentials);
-    firebaseClient.auth().setPersistence(firebaseClient.auth.Auth.Persistence.SESSION);
 }
 
 export { firebaseClient  };
