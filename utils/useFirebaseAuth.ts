@@ -26,6 +26,7 @@ function useFirebaseAuth() {
       return;
     }
 
+    setLoading(true);
     setAuthUser(authState);
     setLoading(false);
   };

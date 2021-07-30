@@ -9,6 +9,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
 import BlogCard, { IBlog } from "components/BlogCard";
 import Head from "next/head";
@@ -37,18 +39,27 @@ const Blogs: React.FC<{ blogsData: IBlog[] }> = ({ blogsData }) => {
       </Head>
       <Flex direction="column" flex="1" p={12}>
         <Heading mb={8}>Blogs</Heading>
-        <Grid gap={6}>
+        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
           {blogsData.map((blog) => (
             <BlogCard data={blog} onView={() => handleOnViewBlog(blog)} />
           ))}
         </Grid>
       </Flex>
-      <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{blogViewing?.title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+          <Flex mb={10}>
+            <Text fontWeight="bold" textTransform="uppercase" fontSize="sm" letterSpacing="wide" color="teal.600">
+              {blogViewing?.category}
+            </Text>
+            <Spacer />
+            <Text fontSize="sm" letterSpacing="wide">
+              {new Date(blogViewing?.created).toDateString()}
+            </Text>
+          </Flex>
             {blogViewing?.content}
           </ModalBody>
         </ModalContent>
@@ -59,7 +70,6 @@ const Blogs: React.FC<{ blogsData: IBlog[] }> = ({ blogsData }) => {
 
 export async function getStaticProps() {
   const blogs = await db.collection("blog").orderBy("created", "desc").get();
-  console.log("blogs.docs", blogs.docs.length);
   const blogsData = blogs.docs.map((blog) => {
     const { created, ...rest } = blog.data();
     return {
