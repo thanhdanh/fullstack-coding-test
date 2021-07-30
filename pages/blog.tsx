@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Flex,
-  Grid,
+  SimpleGrid,
   Heading,
   Modal,
   ModalBody,
@@ -16,6 +16,7 @@ import BlogCard, { IBlog } from "components/BlogCard";
 import Head from "next/head";
 import { db } from "utils/firebaseAdmin";
 import { useState } from "react";
+import { v4 as uuid4 } from "uuid";
 
 const Blogs: React.FC<{ blogsData: IBlog[] }> = ({ blogsData }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,11 +40,11 @@ const Blogs: React.FC<{ blogsData: IBlog[] }> = ({ blogsData }) => {
       </Head>
       <Flex direction="column" flex="1" p={12}>
         <Heading mb={8}>Blogs</Heading>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+        <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} gap={6}>
           {blogsData.map((blog) => (
-            <BlogCard data={blog} onView={() => handleOnViewBlog(blog)} />
+            <BlogCard data={blog} onView={() => handleOnViewBlog(blog)} key={uuid4()} />
           ))}
-        </Grid>
+        </SimpleGrid>
       </Flex>
       <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
         <ModalOverlay />
